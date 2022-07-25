@@ -34,7 +34,8 @@ Route::get('/', function () {
 Route::get('about', function () {
     return '<h1>Привет, страница about</h1>';
 });
-Route::get('contact', function () {
+// для перевода на лругой URL
+/*Route::get('contact', function () {
     return view('contact');
 });
 // для принятия методом post
@@ -43,4 +44,11 @@ Route::post('send-email', function (){
         dump($_POST);
     }
     return 'Send-mail';
+});*/
+// для post на той же странице
+Route::match(['post', 'get'], 'contact', function (){
+    if(!empty($_POST)){
+        dump($_POST);
+    }
+    return view('contact');
 });

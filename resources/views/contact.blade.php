@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<form action="send-email" method="post">
+<form action="" method="post">
 {{--   поле со скрытым ключом  или @csrf--}}
 {{--    {{csrf_field()}}--}}
     @csrf
