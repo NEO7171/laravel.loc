@@ -22,5 +22,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $res = 8 + 3;
     $name = 'John';
-    return view('home')->with('var', $res);
+    return view('home', ['var'=>$res, 'name'=>$name]);
 });
