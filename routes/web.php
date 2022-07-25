@@ -53,3 +53,6 @@ Route::match(['post', 'get'], 'contact', function (){
     }
     return view('contact');
 })->name('contact');
+
+// просто подключаем вид
+Route::view('test', 'test', ['test'=>'Test data']);
