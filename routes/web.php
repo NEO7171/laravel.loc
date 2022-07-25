@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+//Route::get('/', function (){
+//    return 'Привет здарова!!!';
+//});
 Route::get('/', function () {
-    return view('welcome');
+    $res = 8 + 3;
+    $name = 'John';
+    return view('home')->with('var', $res);
 });
