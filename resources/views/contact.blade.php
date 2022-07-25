@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<form action="" method="post">
+<form action="{{route('contact')}}" method="post">
 {{--   поле со скрытым ключом  или @csrf--}}
 {{--    {{csrf_field()}}--}}
     @csrf

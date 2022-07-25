@@ -46,9 +46,10 @@ Route::post('send-email', function (){
     return 'Send-mail';
 });*/
 // для post на той же странице
+// можно именовать маршруты методом -> name
 Route::match(['post', 'get'], 'contact', function (){
     if(!empty($_POST)){
         dump($_POST);
     }
     return view('contact');
-});
+})->name('contact');
