@@ -30,8 +30,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
+        //пропишим  шаблон регулярного выражения для разных типов gtt переменных
+        Route::pattern('id', '[0-9]+');
+        Route::pattern('slug', '[A-Za-z0-9-]+');
         parent::boot();
     }
 

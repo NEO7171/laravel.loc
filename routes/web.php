@@ -47,12 +47,31 @@ Route::post('send-email', function (){
 });*/
 // для post на той же странице
 // можно именовать маршруты методом -> name
-Route::match(['post', 'get'], 'contact', function (){
-    if(!empty($_POST)){
+Route::match(['post', 'get'], 'contact', function () {
+    if (!empty($_POST)) {
         dump($_POST);
     }
     return view('contact');
 })->name('contact');
 
 // просто подключаем вид
-Route::view('test', 'test', ['test'=>'Test data']);
+Route::view('test', 'test', ['test' => 'Test data']);
+// редирект
+Route::redirect('about', 'contact', 301);
+//или  выдаст 301 статус
+//Route::permanentRedirect('about', 'contact');
+
+
+// вывод с парамертами
+Route::get('post/{id}', function ($id) {
+    return "Это пост с ID - $id";
+});
+// c помощью where() можно указать шаблон регулярного выражения под параметры
+//Route::get('post/{id}/{slug}', function ($id, $slug) {
+//    return "Это пост с ID - $id, И слаг - $slug";
+//})->where(['id' => '[0-9]+', 'slug' => '[A-Za-z0-9-]+']);
+// в C:\OpenServer2\domains\laravel.loc\app\Providers\RouteServiceProvider.php
+// в методе boot пропишим  шаблон регулярного выражения для разных типов gtt переменных
+Route::get('post/{id}/{slug}', function ($id, $slug) {
+    return "Это пост с ID - $id, И слаг - $slug";
+});
