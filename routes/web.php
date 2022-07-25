@@ -19,8 +19,14 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', function (){
 //    return 'Привет здарова!!!';
 //});
+//Route::get('/', function () {
+//    $res = 8 + 3;
+//    $name = 'John';
+//    return view('home', ['res'=>$res, 'name'=>$name]);
+//});
+
 Route::get('/', function () {
     $res = 8 + 3;
     $name = 'John';
-    return view('home', ['var'=>$res, 'name'=>$name]);
+    return view('home', compact('res', 'name'));
 });

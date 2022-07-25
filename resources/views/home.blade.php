@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>Привет на домашней странице home</h1>
-<p>{{ $var }} </p>
+<p>{{ $res }} </p>
 <p>{{$name}}</p>
 </body>
 </html>
