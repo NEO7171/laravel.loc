@@ -30,3 +30,17 @@ Route::get('/', function () {
     $name = 'John';
     return view('home', compact('res', 'name'));
 });
+
+Route::get('about', function () {
+    return '<h1>Привет, страница about</h1>';
+});
+Route::get('contact', function () {
+    return view('contact');
+});
+// для принятия методом post
+Route::post('send-email', function (){
+    if(!empty($_POST)){
+        dump($_POST);
+    }
+    return 'Send-mail';
+});
