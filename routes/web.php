@@ -63,15 +63,35 @@ Route::redirect('about', 'contact', 301);
 
 
 // вывод с парамертами
-Route::get('post/{id}', function ($id) {
-    return "Это пост с ID - $id";
-});
+//Route::get('post/{id}', function ($id) {
+//    return "Это пост с ID - $id";
+//});
+
 // c помощью where() можно указать шаблон регулярного выражения под параметры
 //Route::get('post/{id}/{slug}', function ($id, $slug) {
 //    return "Это пост с ID - $id, И слаг - $slug";
 //})->where(['id' => '[0-9]+', 'slug' => '[A-Za-z0-9-]+']);
+
 // в C:\OpenServer2\domains\laravel.loc\app\Providers\RouteServiceProvider.php
 // в методе boot пропишим  шаблон регулярного выражения для разных типов gtt переменных
-Route::get('post/{id}/{slug}', function ($id, $slug) {
-    return "Это пост с ID - $id, И слаг - $slug";
-});
+//Route::get('post/{id}/{slug}', function ($id, $slug) {
+//    return "Это пост с ID - $id, И слаг - $slug";
+//});
+
+// группировка правил например admin
+
+Route::prefix('admin')->group(
+    function () {
+        Route::get('posts', function () {
+            return 'Posts List';
+        });
+        Route::get('posts/create', function () {
+            return 'Posts Create';
+        });
+        Route::get('posts/{id}/edit', function ($id) {
+            return "Edit Posts c id $id";
+        });
+    }
+);
+
+
