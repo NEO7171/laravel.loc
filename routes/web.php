@@ -29,7 +29,7 @@ Route::get('/', function () {
     $res = 8 + 3;
     $name = 'John';
     return view('home', compact('res', 'name'));
-});
+})->name('home');
 
 Route::get('about', function () {
     return '<h1>Привет, страница about</h1>';
@@ -47,7 +47,7 @@ Route::post('send-email', function (){
 });*/
 // для post на той же странице
 // можно именовать маршруты методом -> name
-Route::match(['post', 'get'], 'contact', function () {
+Route::match(['post', 'get', 'put'], 'contact', function () {
     if (!empty($_POST)) {
         dump($_POST);
     }
@@ -74,7 +74,8 @@ Route::redirect('about', 'contact', 301);
 
 // в C:\OpenServer2\domains\laravel.loc\app\Providers\RouteServiceProvider.php
 // в методе boot пропишим  шаблон регулярного выражения для разных типов gtt переменных
-//Route::get('post/{id}/{slug}', function ($id, $slug) {
+//если параметр не обязателен - нужно поставить знак ({id?})
+//Route::get('post/{id?}/{slug?}', function ($id, $slug) {
 //    return "Это пост с ID - $id, И слаг - $slug";
 //});
 
@@ -94,4 +95,10 @@ Route::prefix('admin')->group(
     }
 );
 
+// перенапровление на 404
 
+Route::fallback(function (){
+//   return redirect()->route('home');
+
+   abort(404, 'Страница не сущестаует');
+});

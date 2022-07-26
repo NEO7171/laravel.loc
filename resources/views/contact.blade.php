@@ -11,6 +11,9 @@
 <form action="{{route('contact')}}" method="post">
 {{--   поле со скрытым ключом  или @csrf--}}
 {{--    {{csrf_field()}}--}}
+{{--     метод PUT --}}
+    {{--method_field('PUT')--}}
+    @method('PUT')
     @csrf
     <input type="text" name="name">
     <input type="email" name="email">
