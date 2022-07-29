@@ -10,34 +10,46 @@ class HomeController extends Controller
 {
     public function index()
     {
-        /*  dump($_ENV['DB_DATABASE']);
-          dump(env('DB_HOST'));
-          dump(config('app.timezone'));
-          dump(config('database.connections.msql.database'));
-          dump($_ENV);*/
+        //    $data = DB::table('country')->get();
+        //   $data = DB::table('country')->limit(5)->get();
+        // $data = DB::table('country')->select('code', 'name')->limit(5)->get();
+        // $data = DB::table('country')->select('code', 'name')->orderBy('code', 'DESC')->get();
+        //  $data = DB::table('city')->select('id', 'name')->find(5);
 
-        /* $query = DB::insert("INSERT INTO posts (title, content)
- VALUES (:title, :content)", ['title'=>'Статья 6', 'content'=>'Текст у статьи 6']);
-         var_dump($query);*/
+        /* $data = DB::table('city')->
+         select('id', 'name')->where('id', '<=', 5)->get();*/
 
-//        DB::update("UPDATE posts SET title = ? WHERE id = 3", ['Заголовок 3 изменение']);
-        //  DB::delete("DELETE FROM posts WHERE id=?", [4]);
-        DB::beginTransaction();
-        try {
-            DB::update("UPDATE posts SET created_at = ?
-WHERE created_at IS NULL", [NOW()]);
-            DB::update("UPDATE posts SET updated_at = ?
-WHERE updated_at IS NULL", [NOW()]);
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            echo $e->getMessage() ;
-        }
+      /*  $data = DB::table('city')->select('id', 'name')->
+        where([
+            ['id', '>=', 1],
+            ['id', '<=', 20]
+        ])->get(); */
 
-        $posts = DB::select("SELECT * FROM posts WHERE id> :id",
-            ['id' => 2]);
-        return dump($posts);
-//        return view('home', ['res'=> 5, 'name'=>'John']);
+      /*  $data = DB::table('city')->
+        where('id', '<', 5)->value('Name');*/
+
+        // получаем ассоциативный массив с ключом 'code' и знечением 'name'
+    //    $data = DB::table('country')->limit(10)->pluck('name', 'code');
+
+        // вычисление количества строк и т.д.
+       // $data = DB::table('country')->count();
+       // $data = DB::table('country')->max('population');
+        //$data = DB::table('country')->sum('population');
+        //$data = DB::table('country')->avg('population'); // среднее значение
+
+        // выборка уникальных
+     //   $data = DB::table('city')->select('CountryCode')->distinct()->get();
+
+        // джоины
+
+        $data = DB::table('city')
+            ->select('city.id', 'city.Name as city_name',
+                'country.code', 'country.Name as country_name')->limit(20)
+            ->join('country', 'city.CountryCode', '=', 'country.Code')
+            ->orderBy('city.id')->get();
+
+        dd($data);
+        //return view('home', ['res'=> 5, 'name'=>'John']);
     }
 
     public function test()
