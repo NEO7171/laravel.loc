@@ -5,43 +5,53 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Country;
-use App\Post;
+
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        //  $data = Country::limit(6)->get();
-        //   $data = Country::where('Code', '<', 'ALB')->select('Code', 'name')->get();
-        // $data = City::find(5);
-        //  $data = Country::find('AGO');
-        //   dd($data);
-        //внесение данных
-        /*   $post = new Post();
-           $post->title = 'Post4';
-           $post->content = 'lorem content 4';
-           $post->save();*/
+        //    $data = DB::table('country')->get();
+        //   $data = DB::table('country')->limit(5)->get();
+        // $data = DB::table('country')->select('code', 'name')->limit(5)->get();
+        // $data = DB::table('country')->select('code', 'name')->orderBy('code', 'DESC')->get();
+        //  $data = DB::table('city')->select('id', 'name')->find(5);
 
-        //массовое назначение св-в
-        $post = new Post();
-        // добавление записи
-        //   Post::create(['title'=> 'Post7', 'content'=>'lorem content 7']);
-        // обновление записи
-        /*   $post = Post::find(6);
-           $post->content= 'lorem content 7';
-           $post->save();*/
+        /* $data = DB::table('city')->
+         select('id', 'name')->where('id', '<=', 5)->get();*/
 
-        // массовое обновление записей
-     /*   Post::where('id', '>', 3)
-        ->update(['updated_at' => NOW()]);*/
+      /*  $data = DB::table('city')->select('id', 'name')->
+        where([
+            ['id', '>=', 1],
+            ['id', '<=', 20]
+        ])->get(); */
 
-        // удаление модели
-        /*$post = Post::find(6);
-        $post->delete();*/
+      /*  $data = DB::table('city')->
+        where('id', '<', 5)->value('Name');*/
 
-        Post::destroy(2, 4);
+        // получаем ассоциативный массив с ключом 'code' и знечением 'name'
+    //    $data = DB::table('country')->limit(10)->pluck('name', 'code');
 
-        return view('home', ['res' => 5, 'name' => 'John']);
+        // вычисление количества строк и т.д.
+       // $data = DB::table('country')->count();
+       // $data = DB::table('country')->max('population');
+        //$data = DB::table('country')->sum('population');
+        //$data = DB::table('country')->avg('population'); // среднее значение
+
+        // выборка уникальных
+     //   $data = DB::table('city')->select('CountryCode')->distinct()->get();
+
+        // джоины
+
+        $data = DB::table('city')
+            ->select('city.id', 'city.Name as city_name',
+                'country.code', 'country.Name as country_name')->limit(20)
+            ->join('country', 'city.CountryCode', '=', 'country.Code')
+            ->orderBy('city.id')->get();
+
+        dd($data);
+        //return view('home', ['res'=> 5, 'name'=>'John']);
     }
 
     public function test()
