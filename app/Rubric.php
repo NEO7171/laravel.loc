@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rubric extends Model
 {
-    //
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+        // или
+       // return $this->hasOne(Post::class);
+    }
 }
