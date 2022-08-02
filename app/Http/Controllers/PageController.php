@@ -6,8 +6,8 @@ namespace App\Http\Controllers;
 class PageController extends Controller
 {
     // php artisan make:controller PageController
-    public function show($slug)
+    public function show()
     {
-       return view("pages.show", ['slug'=>$slug]) ;
+       return view("pages.about") ;
     }
 }

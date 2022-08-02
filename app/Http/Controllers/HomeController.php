@@ -75,13 +75,17 @@ class HomeController extends Controller
             dump($tag->title);
         }*/
 
-        $tags = Tag::find(1);
+     /*   $tags = Tag::find(1);
         dump($tags->title);
         foreach ($tags->tagPosts as $post) {
             dump($post->title);
-        }
+        }*/
 
         //return view('home', ['res'=> 5, 'name'=>'John']);
+
+        return view('home');
+
+
     }
 
     public function test()
