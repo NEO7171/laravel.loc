@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Country;
-use App\Rubric;
 use App\Post;
+use App\Tag;
+use App\Rubric;
 
 class HomeController extends Controller
 {
@@ -51,15 +52,34 @@ class HomeController extends Controller
                ->orderBy('city.id')->get();*/
 
 
-     /*   $post = Post::find(3);
+        /*   $post = Post::find(3);
 
-        dd($post->title, $post->rubric->title);*/
+           dd($post->title, $post->rubric->title);*/
 
-      /*  $rubric = Rubric::find(1);
-        dd($rubric->title, $rubric->post->title);*/
+        /*  $rubric = Rubric::find(1);
+          dd($rubric->title, $rubric->post->title);*/
 
-        $rubric = Rubric::find(1);
-        dd($rubric->posts);
+        /*  $posts = Rubric::find(1)->posts()->select('title')
+              ->where('id', '>', 2)->get();
+          dd($posts);*/
+
+     /*   $posts = Post::with('rubric')->where('id', '>', 1)->get();
+
+        foreach ($posts as $post) {
+            dump($post->title, $post->rubric->title);
+        }*/
+
+      /*  $post = Post::find(2);
+        dump($post->title);
+        foreach ($post->tags as $tag) {
+            dump($tag->title);
+        }*/
+
+        $tags = Tag::find(1);
+        dump($tags->title);
+        foreach ($tags->tagPosts as $post) {
+            dump($post->title);
+        }
 
         //return view('home', ['res'=> 5, 'name'=>'John']);
     }
