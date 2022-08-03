@@ -83,7 +83,9 @@ class HomeController extends Controller
 
         //return view('home', ['res'=> 5, 'name'=>'John']);
 
-        return view('home');
+        $title = 'Home page';
+        $h1 = '<h1>Homik hage</h1>';
+        return view('home', compact('title', 'h1'));
 
 
     }
