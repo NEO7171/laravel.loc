@@ -85,7 +85,14 @@ class HomeController extends Controller
 
         $title = 'Home page';
         $h1 = '<h1>Homik hage</h1>';
-        return view('home', compact('title', 'h1'));
+        $data1 = range(1, 20);
+        $data2 = [
+            'title'=>'Title massive',
+            'content'=>'Content massive',
+            'keys'=>'Keys massive',
+
+        ];
+        return view('home', compact('title', 'h1', 'data1', 'data2'));
 
 
     }

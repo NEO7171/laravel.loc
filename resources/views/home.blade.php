@@ -10,6 +10,44 @@
         <div class="container">
             {!! mb_strtoupper($h1)  !!}
             {{-- $title --}}
+            @if(count($data1) > 20)
+                Count > 20
+            @elseif(count($data1) < 20)
+                Count < 20
+            @else
+                Count = 20
+            @endif
+            <br>
+            @isset($data2)
+                Isset data4
+            @endisset
+
+            @production
+                <h1>Production</h1>
+            @endproduction
+
+            @env('local')
+                <h1>local</h1>
+            @endenv
+
+            @for($i = 0; $i < count($data1); $i++)
+                @if($data1[$i] % 2 != 0)
+                    @continue
+                @elseif($data1[$i] ==6 || $data1[$i]== 8)
+                    @continue
+                @elseif($data1[$i] > 15)
+                    @break
+                @endif
+                {{$data1[$i]}},
+            @endfor
+            <br>
+            @foreach($data2 as $k => $v)
+                {{$k}} = {{$v}}
+                <br>
+            @endforeach
+
+
+
             <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator,
                 etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
             <p>
