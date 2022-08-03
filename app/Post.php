@@ -14,10 +14,10 @@ class Post extends Model
 {
     //  protected $table = 'name_table'; -явное указание названия таблицы если отличается
     // protected $primaryKey = 'post_id'; явное указание поля первичного ключа если не ID
-  //  public $incrementing = false; отключение автоинкремента у первичного ключя
-   // protected $keyType = 'string'; даем знать, что primaryKey является строкой
- //  public $timestamps = false;  отключение автозаполнения created_at и updated_at
-   // автоматическое зпролнение поля content
+    //  public $incrementing = false; отключение автоинкремента у первичного ключя
+    // protected $keyType = 'string'; даем знать, что primaryKey является строкой
+    //  public $timestamps = false;  отключение автозаполнения created_at и updated_at
+    // автоматическое зпролнение поля content
 //    protected $attributes=[
 //    'content'=>'Lorem ipsum....2'
 //    ];
@@ -27,8 +27,17 @@ class Post extends Model
     {
         return $this->belongsTo(Rubric::class);
     }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function getPostDate()
+    {
+        $formatter = new \IntlDateFormatter('ru_RU', \IntlDateFormatter::FULL, \IntlDateFormatter::FULL);
+        $formatter->setPattern('d MMM y');
+        return $formatter->format(new \DateTime($this->created_at));
+        //  return Carbon::parse($this->created_at)->diffForHumans();
     }
 }

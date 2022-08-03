@@ -84,7 +84,7 @@ class HomeController extends Controller
         //return view('home', ['res'=> 5, 'name'=>'John']);
 
         $title = 'Home page';
-        $h1 = '<h1>Homik hage</h1>';
+        $h1 = '<h1>Homik page</h1>';
         $data1 = range(1, 20);
         $data2 = [
             'title'=>'Title massive',
@@ -92,7 +92,8 @@ class HomeController extends Controller
             'keys'=>'Keys massive',
 
         ];
-        return view('home', compact('title', 'h1', 'data1', 'data2'));
+        $posts = Post::orderBy('created_at', 'DESC')->get();
+        return view('home', compact('title', 'h1', 'data1', 'data2', 'posts'));
 
 
     }
