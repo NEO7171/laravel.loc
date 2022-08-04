@@ -6,8 +6,9 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Post;
-use App\Tag;
 use App\Rubric;
+use App\Tag;
+
 
 class HomeController extends Controller
 {
@@ -63,23 +64,23 @@ class HomeController extends Controller
               ->where('id', '>', 2)->get();
           dd($posts);*/
 
-     /*   $posts = Post::with('rubric')->where('id', '>', 1)->get();
+        /*   $posts = Post::with('rubric')->where('id', '>', 1)->get();
 
-        foreach ($posts as $post) {
-            dump($post->title, $post->rubric->title);
-        }*/
+           foreach ($posts as $post) {
+               dump($post->title, $post->rubric->title);
+           }*/
 
-      /*  $post = Post::find(2);
-        dump($post->title);
-        foreach ($post->tags as $tag) {
-            dump($tag->title);
-        }*/
+        /*  $post = Post::find(2);
+          dump($post->title);
+          foreach ($post->tags as $tag) {
+              dump($tag->title);
+          }*/
 
-     /*   $tags = Tag::find(1);
-        dump($tags->title);
-        foreach ($tags->tagPosts as $post) {
-            dump($post->title);
-        }*/
+        /*   $tags = Tag::find(1);
+           dump($tags->title);
+           foreach ($tags->tagPosts as $post) {
+               dump($post->title);
+           }*/
 
         //return view('home', ['res'=> 5, 'name'=>'John']);
 
@@ -87,15 +88,34 @@ class HomeController extends Controller
         $h1 = '<h1>Homik page</h1>';
         $data1 = range(1, 20);
         $data2 = [
-            'title'=>'Title massive',
-            'content'=>'Content massive',
-            'keys'=>'Keys massive',
+            'title' => 'Title massive',
+            'content' => 'Content massive',
+            'keys' => 'Keys massive',
 
         ];
         $posts = Post::orderBy('created_at', 'DESC')->get();
         return view('home', compact('title', 'h1', 'data1', 'data2', 'posts'));
 
 
+    }
+
+    public function create()
+    {
+        $title = 'Create Post';
+        $rubrics = Rubric::pluck('title', 'id')->all();
+        return view('create', compact('title', 'rubrics'));
+    }
+
+    public function store(\Illuminate\Http\Request $request)
+    {
+        /*dump($request->input('title'));
+        dump($request->input('content'));
+        dd($request->input('rubric_id'));*/
+
+       // dd($request->all());
+
+        Post::create($request->all());
+        return redirect()->route('home');
     }
 
     public function test()

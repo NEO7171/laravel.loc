@@ -26,6 +26,8 @@ Route::resource('admin/posts', 'PostController', ['parameters' =>
 ]);*/
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/create', 'HomeController@create')->name('posts.create');
+Route::post('/', 'HomeController@store')->name('posts.store');
 Route::get('/page/about', 'PageController@show')->name('page.about');
 // перенапровление на 404
 

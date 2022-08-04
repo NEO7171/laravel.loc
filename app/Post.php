@@ -21,7 +21,7 @@ class Post extends Model
 //    protected $attributes=[
 //    'content'=>'Lorem ipsum....2'
 //    ];
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'rubric_id'];
 
     public function rubric()
     {

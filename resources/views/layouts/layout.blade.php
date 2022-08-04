@@ -33,7 +33,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{{route('home')}}" class="text-white">Home</a></li>
                         <li><a href="{{route('page.about')}}" class="text-white">About</a></li>
-
+                        <li><a href="{{route('posts.create')}}" class="text-white">Create</a></li>
                     </ul>
                 </div>
             </div>
@@ -50,6 +50,7 @@
                 </svg>
                 <strong>Album</strong>
             </a>
+            <a href="{{route('posts.create')}}" class="text-white">Post Create</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
