@@ -8,6 +8,7 @@ use App\Country;
 use App\Post;
 use App\Rubric;
 use App\Tag;
+use Illuminate\Support\Facades\Validator;
 
 
 class HomeController extends Controller
@@ -112,7 +113,28 @@ class HomeController extends Controller
         dump($request->input('content'));
         dd($request->input('rubric_id'));*/
 
-       // dd($request->all());
+        // dd($request->all());
+         $this->validate($request, [
+             'title'=> 'required|min:5|max:100',
+             'content'=> 'required',
+             'rubric_id'=> 'integer',
+         ]);
+        // перевод сообщения валидации
+       /* $rules = [
+            'title' => 'required|min:5|max:100',
+            'content' => 'required',
+            'rubric_id' => 'integer',
+        ];
+        $messages = [
+            'title.required' => 'Заполните поле заголовка',
+            'title.min' => 'Минимальное значение поля  заголовка 5',
+            'title.max' => 'Максимальное значение поля  заголовка 100',
+            'content.required' => 'Заполните контента',
+            'rubric_id.integer' => 'Выберите рубрику',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages)->validate();*/
+
+
 
         Post::create($request->all());
         return redirect()->route('home');
