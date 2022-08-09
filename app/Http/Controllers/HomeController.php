@@ -8,13 +8,45 @@ use App\Country;
 use App\Post;
 use App\Rubric;
 use App\Tag;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // запись в сессию
+        // одиночное
+        /* $request->session()->put('test', 'Test value');
+         // массив в сессию
+         session([
+             'cart'=>[
+                 ['id'=>1, 'title'=>'product 1'],
+                 ['id'=>2, 'title'=>'product 2'],
+             ]
+         ]);*/
+
+        // получение данных сессии
+        dump(session('test'));
+        dump(session('cart')[1]['title']);
+        // или
+        dump($request->session()->get('test'));
+        // дозаписать в сессию
+        $request->session()->push('cart', ['id' => 5, 'title' => 'product 5']);
+
+        // удаление из сессии
+        // прочитать и удалить
+        // $request->session()->pull('test2');
+        // просто удалить
+        //$request->session()->forget('test2');
+        // полная очистка сессии
+       // $request->session()->flash();
+
+        // вывод сессии
+        // dump($request->session()->all());
+        dump(session()->all());
+
+
         //    $data = DB::table('country')->get();
         //   $data = DB::table('country')->limit(5)->get();
         // $data = DB::table('country')->select('code', 'name')->limit(5)->get();
@@ -107,36 +139,38 @@ class HomeController extends Controller
         return view('create', compact('title', 'rubrics'));
     }
 
-    public function store(\Illuminate\Http\Request $request)
+    public function store(Request $request)
     {
         /*dump($request->input('title'));
         dump($request->input('content'));
         dd($request->input('rubric_id'));*/
 
         // dd($request->all());
-         $this->validate($request, [
-             'title'=> 'required|min:5|max:100',
-             'content'=> 'required',
-             'rubric_id'=> 'integer',
-         ]);
-        // перевод сообщения валидации
-       /* $rules = [
+        $this->validate($request, [
             'title' => 'required|min:5|max:100',
             'content' => 'required',
             'rubric_id' => 'integer',
-        ];
-        $messages = [
-            'title.required' => 'Заполните поле заголовка',
-            'title.min' => 'Минимальное значение поля  заголовка 5',
-            'title.max' => 'Максимальное значение поля  заголовка 100',
-            'content.required' => 'Заполните контента',
-            'rubric_id.integer' => 'Выберите рубрику',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages)->validate();*/
-
+        ]);
+        // перевод сообщения валидации
+        /* $rules = [
+             'title' => 'required|min:5|max:100',
+             'content' => 'required',
+             'rubric_id' => 'integer',
+         ];
+         $messages = [
+             'title.required' => 'Заполните поле заголовка',
+             'title.min' => 'Минимальное значение поля  заголовка 5',
+             'title.max' => 'Максимальное значение поля  заголовка 100',
+             'content.required' => 'Заполните контента',
+             'rubric_id.integer' => 'Выберите рубрику',
+         ];
+         $validator = Validator::make($request->all(), $rules, $messages)->validate();*/
 
 
         Post::create($request->all());
+
+        // запишем во flash сесию значения
+        $request->session()->flash('success', 'данные успешно сохранены');
         return redirect()->route('home');
     }
 

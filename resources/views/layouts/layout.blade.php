@@ -62,7 +62,7 @@
 @show
 <main role="main">
     <div class="container">
-        @include('layouts.errors')
+        @include('layouts.alerts')
     </div>
 
     @yield('content')
