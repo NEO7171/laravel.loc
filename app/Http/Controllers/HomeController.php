@@ -9,12 +9,34 @@ use App\Post;
 use App\Rubric;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        // cookie Так и не понял нифига не работает
+        //Cookie::
+        // Cookie::queue('test', 'test cookie', 4);
+        /* $minutes = 60;
+         $response = new Response('Set Cookie');
+         $response->withCookie(cookie('test', 'test MyValue', $minutes));
+         dump(Cookie::get('test'));
+         dump($request->cookie('test'));*/
+
+        // запись в кешь
+        // Cache::put('cache-key', 'cache-val', 60);
+        //получить из кеша
+        //dump(Cache::get('cache-key'));
+        if (Cache::has('posts')) {
+            $posts = Cache::get('posts');
+        } else {
+            $posts = Post::orderBy('created_at', 'DESC')->get();
+            Cache::put('posts', $posts, 60);
+        }
+
+
         // запись в сессию
         // одиночное
         /* $request->session()->put('test', 'Test value');
@@ -27,12 +49,16 @@ class HomeController extends Controller
          ]);*/
 
         // получение данных сессии
-        dump(session('test'));
-        dump(session('cart')[1]['title']);
+
+        // dump(session('test'));
+        /*  if ($request->session()->has('cart')) {
+              // dump(session('cart')[1]['title']);
+          }*/
+
         // или
-        dump($request->session()->get('test'));
+        // dump($request->session()->get('test'));
         // дозаписать в сессию
-        $request->session()->push('cart', ['id' => 5, 'title' => 'product 5']);
+        // $request->session()->push('cart', ['id' => 5, 'title' => 'product 5']);
 
         // удаление из сессии
         // прочитать и удалить
@@ -40,11 +66,11 @@ class HomeController extends Controller
         // просто удалить
         //$request->session()->forget('test2');
         // полная очистка сессии
-       // $request->session()->flash();
+        // $request->session()->flash();
 
         // вывод сессии
         // dump($request->session()->all());
-        dump(session()->all());
+        //  dump(session()->all());
 
 
         //    $data = DB::table('country')->get();
@@ -126,7 +152,7 @@ class HomeController extends Controller
             'keys' => 'Keys massive',
 
         ];
-        $posts = Post::orderBy('created_at', 'DESC')->get();
+
         return view('home', compact('title', 'h1', 'data1', 'data2', 'posts'));
 
 
