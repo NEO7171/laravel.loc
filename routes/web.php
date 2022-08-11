@@ -29,7 +29,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/create', 'HomeController@create')->name('posts.create');
 Route::post('/', 'HomeController@store')->name('posts.store');
 Route::get('/page/about', 'PageController@show')->name('page.about');
-Route::get('/send', 'ContactController@send')->name('page.send');
+Route::match(['get', 'post'], '/send', 'ContactController@send');
 // перенапровление на 404
 Route::fallback(function () {
 //   return redirect()->route('home');
