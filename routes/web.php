@@ -36,3 +36,7 @@ Route::fallback(function () {
 
     abort(404, 'Страница не сущестаует');
 });
+
+// регистрация
+Route::get('/register', 'UserController@create')->name('register.create');
+Route::post('/register', 'UserController@store')->name('register.store');
