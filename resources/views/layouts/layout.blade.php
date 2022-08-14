@@ -50,12 +50,29 @@
                         <circle cx="12" cy="13" r="4"/>
                     </svg>
                     <strong>Album</strong>
+
                 </a>
+                {{--  Проверка регистрации --}}
+              {{--  @if(auth()->check())
+                    <a href="#">{{auth()->user()->name}}</a>
+                    <a href="{{route('logout')}}" class="text-white">log out</a>
+                @else
+                    <a href="{{route('register.create')}}" class="text-white">Registered</a>
+                    <a href="{{route('login.create')}}" class="text-white">login</a>
+                @endif--}}
+                {{--  Проверка регистрации 2 вариант --}}
+                @auth
+                    <a href="#">{{auth()->user()->name}}</a>
+                    <a href="{{route('logout')}}" class="text-white">log out</a>
+                @endauth
+                @guest
+                    <a href="{{route('register.create')}}" class="text-white">Registered</a>
+                    <a href="{{route('login.create')}}" class="text-white">login</a>
+                @endguest
                 <a href="{{route('posts.create')}}" class="text-white">Post Create</a>
-                <a href="{{route('register.create')}}" class="text-white">Registered</a>
                 @php
-                // проверка аутентификации
-                dump(Auth::check())
+                    // проверка аутентификации
+                    dump(Auth::check())
                 @endphp
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader"
                         aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +95,7 @@
 
 
 <script src="{{asset('js/scripts.js')}}"
-        ></script>
+></script>
 
 </body>
 </html>

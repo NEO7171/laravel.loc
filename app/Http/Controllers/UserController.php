@@ -31,4 +31,32 @@ class UserController extends Controller
         return redirect()->home();
         //dd($request->all());
     }
+
+    public function loginForm()
+    {
+        return view('user.login');
+    }
+
+    public function login(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        if (Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+        ])) {
+            return redirect()->home();
+        }else{
+            return redirect()->back()->with('error', 'Неверный логин или пороль');
+        };
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login.create');
+    }
 }
