@@ -37,14 +37,22 @@ Route::fallback(function () {
     abort(404, 'Страница не сущестаует');
 });
 
-// регистрация
-Route::get('/register', 'UserController@create')->name('register.create');
-Route::post('/register', 'UserController@store')->name('register.store');
+// группимруем маршруты для неавторизованных
+Route::group(['middleware' => 'guest'], function () {
+    // регистрация
+    Route::get('/register', 'UserController@create')->name('register.create');
+    Route::post('/register', 'UserController@store')->name('register.store');
+    //Аутентификация
+    Route::get('/login', 'UserController@loginForm')->name('login.create');
+    Route::post('/login', 'UserController@login')->name('login');
+});
 
-//Аутентификация
-Route::get('/login', 'UserController@loginForm')->name('login.create');
-Route::post('/login', 'UserController@login')->name('login');
-Route::get('/logout', 'UserController@logout')->name('logout');
 
-// админскай маршрут
-Route::get('admin', 'Admin\MainController@index');
+Route::get('/logout', 'UserController@logout')->name('logout')->middleware('auth');
+
+
+Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    // админскай маршрут
+    Route::get('/', 'MainController@index');
+});
+
