@@ -53,16 +53,22 @@
 
                 </a>
                 {{--  Проверка регистрации --}}
-              {{--  @if(auth()->check())
-                    <a href="#">{{auth()->user()->name}}</a>
-                    <a href="{{route('logout')}}" class="text-white">log out</a>
-                @else
-                    <a href="{{route('register.create')}}" class="text-white">Registered</a>
-                    <a href="{{route('login.create')}}" class="text-white">login</a>
-                @endif--}}
+                {{--  @if(auth()->check())
+                      <a href="#">{{auth()->user()->name}}</a>
+                      <a href="{{route('logout')}}" class="text-white">log out</a>
+                  @else
+                      <a href="{{route('register.create')}}" class="text-white">Registered</a>
+                      <a href="{{route('login.create')}}" class="text-white">login</a>
+                  @endif--}}
                 {{--  Проверка регистрации 2 вариант --}}
                 @auth
-                    <a href="#">{{auth()->user()->name}}</a>
+                    <a href="#">{{auth()->user()->name}}
+                        @if(auth()->user()->avatar)
+                            {{--<img width="100" src="storage/{{auth()->user()->avatar}}" alt="">--}}
+                            {{--или--}}
+                            <img width="100" src="{{asset('storage/' . auth()->user()->avatar)}}" alt="">
+                        @endif
+                    </a>
                     <a href="{{route('logout')}}" class="text-white">log out</a>
                 @endauth
                 @guest

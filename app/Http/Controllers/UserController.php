@@ -20,11 +20,20 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
+            'avatar' => 'nullable|image',
         ]);
+
+        if ($request->hasFile('avatar')){
+            $folder = date('Y-m-d');
+            $avatar = $request->file('avatar')->store("images/{$folder}");
+        }
+
+        // dd($request->all());
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'avatar'=> $avatar ?? null,
         ]);
         session()->flash('success', 'Вы успешно авторизовались');
         Auth::login($user);
@@ -49,7 +58,7 @@ class UserController extends Controller
             'password' => $request->password,
         ])) {
             return redirect()->home();
-        }else{
+        } else {
             return redirect()->back()->with('error', 'Неверный логин или пороль');
         };
     }
