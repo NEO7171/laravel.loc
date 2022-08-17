@@ -9,7 +9,6 @@ use App\Post;
 use App\Rubric;
 use App\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 
 class HomeController extends Controller
@@ -29,12 +28,12 @@ class HomeController extends Controller
         // Cache::put('cache-key', 'cache-val', 60);
         //получить из кеша
         //dump(Cache::get('cache-key'));
-        if (Cache::has('posts')) {
-            $posts = Cache::get('posts');
-        } else {
-            $posts = Post::orderBy('created_at', 'DESC')->get();
-            Cache::put('posts', $posts, 60);
-        }
+        /* if (Cache::has('posts')) {
+             $posts = Cache::get('posts');
+         } else {
+             $posts = Post::orderBy('created_at', 'DESC')->get();
+             Cache::put('posts', $posts, 60);
+         }*/
 
 
         // запись в сессию
@@ -141,6 +140,8 @@ class HomeController extends Controller
                dump($post->title);
            }*/
 
+        // пагинация
+        $posts = Post::orderBy('id', 'desc')->paginate(3);
         //return view('home', ['res'=> 5, 'name'=>'John']);
 
         $title = 'Home page';

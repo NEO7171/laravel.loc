@@ -92,6 +92,7 @@
                     </div>
                 @endforeach
             </div>
+            <div class="text-center">{{ $posts->links('vendor.pagination.simple-bootstrap-4') }} {{ $posts->links('vendor.pagination.bootstrap-4') }}</div>
         </div>
     </div>
 @endsection
