@@ -141,7 +141,7 @@ class HomeController extends Controller
            }*/
 
         // пагинация
-        $posts = Post::orderBy('id', 'desc')->paginate(3);
+        $posts = Post::orderBy('created_at', 'desc')->paginate(3);
         //return view('home', ['res'=> 5, 'name'=>'John']);
 
         $title = 'Home page';

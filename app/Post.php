@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class Post
@@ -39,5 +40,17 @@ class Post extends Model
         $formatter->setPattern('d MMM y');
         return $formatter->format(new \DateTime($this->created_at));
         //  return Carbon::parse($this->created_at)->diffForHumans();
+    }
+    // пишем мутатор (меняет данные перед тем как записать в БД)
+    public function setTitleAttribute($value)
+    {
+      //  dd($value);
+        // делаем в тайтле первые буквы заглавными
+        $this->attributes['title'] = Str::title($value);
+    }
+    // пишем аксессор (меняет данные полученные из БД перед тем как вывести)
+    public function getTitleAttribute($value)
+    {
+        return Str::upper($value);
     }
 }
